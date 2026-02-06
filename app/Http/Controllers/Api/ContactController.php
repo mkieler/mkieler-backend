@@ -17,11 +17,13 @@ class ContactController extends Controller
     {
         $validated = $request->validated();
 
+        $name = $validated['firstName'].' '.$validated['lastName'];
+
         Mail::to(config('mail.from.address'))->send(
             new ContactMail(
-                name: $validated['name'],
+                name: $name,
                 email: $validated['email'],
-                subject: $validated['subject'],
+                subject: $validated['inquiryType'],
                 message: $validated['message'],
             )
         );

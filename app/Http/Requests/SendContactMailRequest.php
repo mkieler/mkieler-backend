@@ -23,11 +23,13 @@ class SendContactMailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'subject' => ['required', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:50'],
+            'inquiryType' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:5000'],
-            'turnstile_token' => ['required', 'string', new TurnstileToken],
+            'turnstileToken' => ['required', 'string', new TurnstileToken],
         ];
     }
 
@@ -39,13 +41,14 @@ class SendContactMailRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Please provide your name.',
+            'firstName.required' => 'Please provide your first name.',
+            'lastName.required' => 'Please provide your last name.',
             'email.required' => 'Please provide your email address.',
             'email.email' => 'Please provide a valid email address.',
-            'subject.required' => 'Please provide a subject.',
+            'inquiryType.required' => 'Please select an inquiry type.',
             'message.required' => 'Please provide a message.',
             'message.max' => 'The message may not be greater than 5000 characters.',
-            'turnstile_token.required' => 'Please complete the verification.',
+            'turnstileToken.required' => 'Please complete the verification.',
         ];
     }
 }
