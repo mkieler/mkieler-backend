@@ -3,10 +3,18 @@ set -e
 
 echo "Running deployment scripts..."
 
-# Set correct permissions for storage, cache, and database
+# Ensure database directory and file exist with correct permissions
+echo "Setting up SQLite database..."
+mkdir -p /var/www/database
+touch /var/www/database/database.sqlite
+chown -R www-data:www-data /var/www/database
+chmod 775 /var/www/database
+chmod 664 /var/www/database/database.sqlite
+
+# Set correct permissions for storage and cache
 echo "Setting permissions..."
-chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/database
-chmod -R 775 /var/www/storage /var/www/bootstrap/cache /var/www/database
+chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # Install/update composer dependencies (production only)
 echo "Installing composer dependencies..."
