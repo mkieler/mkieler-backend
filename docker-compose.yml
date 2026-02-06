@@ -10,7 +10,7 @@ services:
     expose:
       - 9000
     networks:
-      - laravel
+      - default
       - dokploy-network
 
   nginx:
@@ -21,18 +21,9 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-    networks:
-      - laravel
-      - dokploy-network
     depends_on:
       - app
 
 networks:
-  laravel:
-    driver: bridge
   dokploy-network:
     external: true
-
-volumes:
-  mysql_data:
-    driver: local
