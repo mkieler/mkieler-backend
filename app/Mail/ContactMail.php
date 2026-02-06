@@ -20,7 +20,7 @@ class ContactMail extends Mailable
         public string $name,
         public string $email,
         public string $inquiryType,
-        public string $message,
+        public string $body,
     ) {
     }
 

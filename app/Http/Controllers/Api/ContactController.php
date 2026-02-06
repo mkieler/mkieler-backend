@@ -24,7 +24,7 @@ class ContactController extends Controller
                 name: $name,
                 email: $validated['email'],
                 inquiryType: $validated['inquiryType'],
-                message: $validated['message'],
+                body: $validated['message'],
             )
         );
 
