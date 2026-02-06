@@ -19,7 +19,7 @@ class ContactMail extends Mailable
     public function __construct(
         public string $name,
         public string $email,
-        public string $subject,
+        public string $inquiryType,
         public string $message,
     ) {
     }
@@ -31,7 +31,7 @@ class ContactMail extends Mailable
     {
         return new Envelope(
             from: new Address($this->email, $this->name),
-            subject: 'Contact Form: '.$this->subject,
+            subject: 'Contact Form: '.$this->inquiryType,
         );
     }
 

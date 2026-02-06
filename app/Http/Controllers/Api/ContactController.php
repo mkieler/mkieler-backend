@@ -23,7 +23,7 @@ class ContactController extends Controller
             new ContactMail(
                 name: $name,
                 email: $validated['email'],
-                subject: $validated['inquiryType'],
+                inquiryType: $validated['inquiryType'],
                 message: $validated['message'],
             )
         );
