@@ -1,20 +1,22 @@
 <?php
 
 use App\Http\Controllers\Api\ContactController;
-use App\Http\Controllers\Api\V1\HomepageController;
-use App\Http\Controllers\Api\V1\LocationController;
+use App\Http\Controllers\Api\V1\ComponentController;
+use App\Http\Controllers\Api\V1\PageController;
 use App\Http\Controllers\Api\V1\ServiceController;
+use App\Http\Controllers\Api\V1\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/contact', [ContactController::class, 'send']);
 
 Route::prefix('v1')->group(function () {
-    Route::get('/homepage', [HomepageController::class, 'index']);
+    Route::get('/pages/{slug}', [PageController::class, 'show']);
+
+    Route::get('/components/{name}', [ComponentController::class, 'show']);
 
     Route::get('/services', [ServiceController::class, 'index']);
-    Route::get('/services/page', [ServiceController::class, 'page']);
+    Route::get('/services/featured', [ServiceController::class, 'featured']);
     Route::get('/services/{slug}', [ServiceController::class, 'show']);
 
-    Route::get('/locations', [LocationController::class, 'index']);
-    Route::get('/locations/{slug}', [LocationController::class, 'show']);
+    Route::get('/testimonials', [TestimonialController::class, 'index']);
 });

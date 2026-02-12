@@ -24,11 +24,8 @@ return new class extends Migration
             $table->string('icon');
             $table->json('related_services')->nullable();
             $table->json('use_cases');
-            $table->string('seo_title');
-            $table->text('seo_description');
-            $table->string('seo_og_title')->nullable();
-            $table->string('seo_og_description')->nullable();
             $table->integer('sort_order')->default(0);
+            $table->boolean('featured')->default(false);
             $table->timestamps();
         });
     }

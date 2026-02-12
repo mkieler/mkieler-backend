@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ServiceResource;
-use App\Http\Resources\ServicesPageResource;
 use App\Services\ServiceService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -31,22 +30,22 @@ class ServiceController extends Controller
     }
 
     /**
+     * Get featured services for homepage.
+     */
+    public function featured(): AnonymousResourceCollection
+    {
+        return ServiceResource::collection(
+            $this->serviceService->getFeaturedServices()
+        );
+    }
+
+    /**
      * Get a specific service by slug.
      */
     public function show(string $slug): ServiceResource
     {
         return new ServiceResource(
             $this->serviceService->getServiceBySlug($slug)
-        );
-    }
-
-    /**
-     * Get the services overview page.
-     */
-    public function page(): ServicesPageResource
-    {
-        return new ServicesPageResource(
-            $this->serviceService->getServicesPage()
         );
     }
 }

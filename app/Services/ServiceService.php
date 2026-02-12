@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Service;
-use App\Models\ServicesPage;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -13,16 +12,33 @@ class ServiceService
 {
     /**
      * Get all services ordered by sort_order.
+     *
+     * @return Collection<int, Service>
      */
     public function getAllServices(): Collection
     {
         return Service::query()
+            ->with(['seo'])
             ->orderBy('sort_order')
             ->get();
     }
 
     /**
-     * Get a service by slug with processes and FAQs.
+     * Get featured services for homepage.
+     *
+     * @return Collection<int, Service>
+     */
+    public function getFeaturedServices(): Collection
+    {
+        return Service::query()
+            ->with(['seo'])
+            ->where('featured', true)
+            ->orderBy('sort_order')
+            ->get();
+    }
+
+    /**
+     * Get a service by slug with all relations.
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
@@ -30,17 +46,7 @@ class ServiceService
     {
         return Service::query()
             ->where('slug', $slug)
-            ->with(['processes', 'faqs'])
+            ->with(['seo', 'processes', 'faqs'])
             ->firstOrFail();
-    }
-
-    /**
-     * Get the services overview page.
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public function getServicesPage(): ServicesPage
-    {
-        return ServicesPage::query()->firstOrFail();
     }
 }

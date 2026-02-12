@@ -21,8 +21,7 @@ class ContactMail extends Mailable
         public string $email,
         public string $inquiryType,
         public string $body,
-    ) {
-    }
+    ) {}
 
     /**
      * Get the message envelope.

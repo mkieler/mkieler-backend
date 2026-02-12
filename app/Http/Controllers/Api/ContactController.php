@@ -4,32 +4,31 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SendContactMailRequest;
-use App\Mail\ContactMail;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
+use App\Services\ContactService;
 
+/**
+ * Controller for contact form endpoints.
+ */
 class ContactController extends Controller
 {
     /**
-     * Send contact form email.
+     * Create a new controller instance.
      */
-    public function send(SendContactMailRequest $request): JsonResponse
+    public function __construct(
+        private ContactService $contactService
+    ) {}
+
+    /**
+     * Send contact form email.
+     *
+     * @return array{message: string}
+     */
+    public function send(SendContactMailRequest $request): array
     {
-        $validated = $request->validated();
+        $this->contactService->sendContactEmail($request->validated());
 
-        $name = $validated['firstName'].' '.$validated['lastName'];
-
-        Mail::to(config('mail.from.address'))->send(
-            new ContactMail(
-                name: $name,
-                email: $validated['email'],
-                inquiryType: $validated['inquiryType'],
-                body: $validated['message'],
-            )
-        );
-
-        return response()->json([
+        return [
             'message' => 'Your message has been sent successfully.',
-        ]);
+        ];
     }
 }

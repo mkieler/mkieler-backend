@@ -6,6 +6,8 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -40,6 +42,9 @@ class ServiceForm
                                         TextInput::make('sort_order')
                                             ->numeric()
                                             ->default(0),
+                                        Toggle::make('featured')
+                                            ->label('Featured on homepage')
+                                            ->default(false),
                                     ])
                                     ->columns(2),
                                 Section::make('Description')
@@ -108,20 +113,28 @@ class ServiceForm
                             ]),
                         Tab::make('SEO')
                             ->schema([
-                                TextInput::make('seo_title')
-                                    ->label('Title')
-                                    ->required()
-                                    ->maxLength(255),
-                                Textarea::make('seo_description')
-                                    ->label('Description')
-                                    ->required()
-                                    ->rows(3),
-                                TextInput::make('seo_og_title')
-                                    ->label('OG Title')
-                                    ->maxLength(255),
-                                TextInput::make('seo_og_description')
-                                    ->label('OG Description')
-                                    ->maxLength(255),
+                                Group::make()
+                                    ->relationship('seo')
+                                    ->schema([
+                                        Section::make('SEO Settings')
+                                            ->schema([
+                                                TextInput::make('title')
+                                                    ->required()
+                                                    ->maxLength(255),
+                                                Textarea::make('description')
+                                                    ->required()
+                                                    ->rows(3),
+                                            ]),
+                                        Section::make('Open Graph')
+                                            ->schema([
+                                                TextInput::make('og_title')
+                                                    ->maxLength(255),
+                                                Textarea::make('og_description')
+                                                    ->rows(2),
+                                                TextInput::make('og_image')
+                                                    ->url(),
+                                            ]),
+                                    ]),
                             ]),
                     ])
                     ->columnSpanFull(),

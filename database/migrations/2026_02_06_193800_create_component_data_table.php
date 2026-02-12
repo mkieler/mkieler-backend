@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('testimonials', function (Blueprint $table) {
+        Schema::create('component_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id')->constrained()->cascadeOnDelete();
-            $table->text('quote');
-            $table->integer('sort_order')->default(0);
+            $table->foreignId('component_id')->constrained()->cascadeOnDelete();
+            $table->string('key');
+            $table->text('value');
             $table->timestamps();
+
+            $table->index(['component_id', 'key']);
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('testimonials');
+        Schema::dropIfExists('component_data');
     }
 };

@@ -15,13 +15,15 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => env('APP_ENV') === 'local' ? ['*'] : [],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => env('APP_ENV') === 'local' ? [] : [
+        '#https?://.*\.mkieler\.com$#',
+    ],
 
     'allowed_headers' => ['*'],
 

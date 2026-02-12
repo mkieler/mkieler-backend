@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSeoMetadata;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,6 +14,8 @@ class Service extends Model
 {
     /** @use HasFactory<\Database\Factories\ServiceFactory> */
     use HasFactory;
+
+    use HasSeoMetadata;
 
     /**
      * The attributes that are mass assignable.
@@ -31,11 +34,8 @@ class Service extends Model
         'icon',
         'related_services',
         'use_cases',
-        'seo_title',
-        'seo_description',
-        'seo_og_title',
-        'seo_og_description',
         'sort_order',
+        'featured',
     ];
 
     /**
@@ -51,6 +51,7 @@ class Service extends Model
             'benefits' => 'array',
             'related_services' => 'array',
             'use_cases' => 'array',
+            'featured' => 'boolean',
         ];
     }
 
